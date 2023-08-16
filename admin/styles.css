@@ -6,7 +6,7 @@ body {
 
 .grid-container {
     display: grid;
-    grid-template-columns: repeat(10, 40px);
+    grid-template-columns: repeat(10, 35px);
     gap: 2px;
     margin-bottom: 20px;
 }
@@ -19,6 +19,7 @@ body {
 }
 
 .input-list {
+    margin-top: 20px;
     margin-bottom: 20px;
 }
 
@@ -34,6 +35,19 @@ body {
 }
 
 #add-input-btn {
-    cursor: pointer;
     color: blue;
+}
+
+.code-box {
+    border: 1px solid #ddd;
+    background-color: #f5f5f5;
+    padding: 20px;
+    margin-top: 20px;
+}
+
+.code-box pre {
+    font-family: 'Courier New', monospace;
+    font-size: 14px;
+    white-space: pre-wrap;
+    word-wrap: break-word;
 }

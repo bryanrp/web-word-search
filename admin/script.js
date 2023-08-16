@@ -13,6 +13,9 @@ for (let row = 0; row < 10; row++) {
 // Get the grid form element
 const gridForm = document.getElementById('grid-form');
 
+// Get the code snippet element
+const codeSnippetElement = document.getElementById('code-snippet');
+
 // Add event listener to the form submission
 gridForm.addEventListener('submit', function (event) {
     event.preventDefault();
@@ -27,15 +30,33 @@ gridForm.addEventListener('submit', function (event) {
 
     // Create the request body
     const requestBody = {
-        grid: chunkArray(grid, 10), // Assuming 10x10 grid
+        gridLetters: chunkArray(grid, 10), // Assuming 10x10 grid
         answer: answer
     };
 
-    // For demonstration, logging the request body
-    console.log(requestBody);
-
-    // You can perform your actual form submission here
+    codeSnippetElement.textContent = JSON.stringify(requestBody, null, 4);
 });
+
+// Add event listener to the "Generate random letters on empty cells" button
+const generateRandomButton = document.getElementById('gen-random-btn');
+generateRandomButton.addEventListener('click', function (event) {
+    event.preventDefault();
+    const gridCells = document.querySelectorAll('.grid-cell');
+    gridCells.forEach(function (cell) {
+        if (cell.value === "")
+            cell.value = getRandomUppercaseLetter();
+    })
+})
+
+// Add event listener to the "Clear all cells" button
+const clearButton = document.getElementById('clear-btn');
+clearButton.addEventListener('click', function (event) {
+    event.preventDefault();
+    const gridCells = document.querySelectorAll('.grid-cell');
+    gridCells.forEach(function (cell) {
+        cell.value = "";
+    })
+})
 
 // Add event listener to the "Add Input" button
 const addInputButton = document.getElementById('add-input-btn');
@@ -44,7 +65,7 @@ addInputButton.addEventListener('click', function () {
     const newInputItem = document.createElement('div');
     newInputItem.classList.add('input-item');
     newInputItem.innerHTML = `
-        <input type="text" name="answer" placeholder="Text Input">
+        <input type="text" name="answer" placeholder="Answer">
         <span class="remove-input-btn">- Remove</span>
       `;
     inputList.appendChild(newInputItem);
@@ -65,4 +86,11 @@ function chunkArray(array, chunkSize) {
         chunkedArray.push(array.slice(i, i + chunkSize));
     }
     return chunkedArray;
+}
+
+// Helper function to get random uppercase letter
+function getRandomUppercaseLetter() {
+    const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    const randomIndex = Math.floor(Math.random() * alphabet.length);
+    return alphabet.charAt(randomIndex);
 }
