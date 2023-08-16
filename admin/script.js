@@ -79,6 +79,20 @@ document.addEventListener('click', function (event) {
     }
 });
 
+// Add event listener to the "Copy code" button
+const copyCodeButton = document.getElementById('copy-code-btn');
+copyCodeButton.addEventListener('click', async function () {
+    try {
+        await navigator.clipboard.writeText(codeSnippetElement.textContent);
+        copyCodeButton.textContent = 'Copied!';
+        setTimeout(() => {
+            copyCodeButton.textContent = 'Copy code to clipboard';
+        }, 1500);
+    } catch (error) {
+        console.error('Failed to copy:', error);
+    }
+});
+
 // Helper function to chunk an array into subarrays
 function chunkArray(array, chunkSize) {
     const chunkedArray = [];
